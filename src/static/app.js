@@ -42,12 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Load saved preference
-  applyDarkMode(localStorage.getItem("darkMode") === "true");
+  // Load saved preference, falling back to system preference on first visit
+  const savedDarkMode = localStorage.getItem("darkMode");
+  const prefersDark =
+    savedDarkMode !== null
+      ? savedDarkMode === "true"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyDarkMode(prefersDark);
 
   darkModeToggle.addEventListener("click", () => {
     const isDark = document.body.classList.contains("dark-mode");
-    localStorage.setItem("darkMode", !isDark);
+    localStorage.setItem("darkMode", String(!isDark));
     applyDarkMode(!isDark);
   });
 
