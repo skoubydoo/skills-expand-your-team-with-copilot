@@ -24,8 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
-  const schoolName =
-    document.querySelector("header h1")?.textContent || "Our School";
 
   // Activity categories with corresponding colors
   const activityTypes = {
@@ -482,19 +480,34 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/^-|-$/g, "")}`;
   }
 
+  // Read the school name from the page header when needed.
+  function getSchoolName() {
+    return document.querySelector("header h1")?.textContent || "Our School";
+  }
+
+  // Escape dynamic values used in HTML attributes.
+  function escapeHtmlAttribute(value) {
+    return value
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
   // Build social sharing links for an activity
   function buildShareLinks(activityName, formattedSchedule) {
     const pageUrl = window.location.href.split("#")[0];
     const activityUrl = `${pageUrl}#${createActivityAnchorId(activityName)}`;
-    const shareText = `Check out ${activityName} at ${schoolName}! Schedule: ${formattedSchedule}`;
+    const shareText = `Check out ${activityName} at ${getSchoolName()}! Schedule: ${formattedSchedule}`;
 
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
       `${shareText} ${activityUrl}`
     )}`;
     // X sharing still uses the twitter.com intent endpoint.
     const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      shareText
-    )}&url=${encodeURIComponent(activityUrl)}`;
+      `${shareText} ${activityUrl}`
+    )}`;
     const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
       activityUrl
     )}&quote=${encodeURIComponent(shareText)}`;
@@ -530,6 +543,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Format the schedule using the new helper function
     const formattedSchedule = formatSchedule(details);
     const shareLinks = buildShareLinks(name, formattedSchedule);
+    const safeShareLinks = {
+      whatsappUrl: escapeHtmlAttribute(shareLinks.whatsappUrl),
+      xUrl: escapeHtmlAttribute(shareLinks.xUrl),
+      facebookUrl: escapeHtmlAttribute(shareLinks.facebookUrl),
+    };
 
     // Create activity tag
     const tagHtml = `
@@ -562,13 +580,13 @@ document.addEventListener("DOMContentLoaded", () => {
       ${capacityIndicator}
       <div class="share-buttons">
         <a class="share-button whatsapp-share" href="${
-          shareLinks.whatsappUrl
+          safeShareLinks.whatsappUrl
         }" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">WhatsApp</a>
         <a class="share-button x-share" href="${
-          shareLinks.xUrl
+          safeShareLinks.xUrl
         }" target="_blank" rel="noopener noreferrer" aria-label="Share on X">X</a>
         <a class="share-button facebook-share" href="${
-          shareLinks.facebookUrl
+          safeShareLinks.facebookUrl
         }" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">Facebook</a>
       </div>
       <div class="participants-list">
