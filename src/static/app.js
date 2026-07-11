@@ -501,16 +501,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const activityUrl = `${pageUrl}#${createActivityAnchorId(activityName)}`;
     const shareText = `Check out ${activityName} at ${getSchoolName()}! Schedule: ${formattedSchedule}`;
 
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
       `${shareText} ${activityUrl}`
     )}`;
     // X sharing still uses the twitter.com intent endpoint.
     const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      `${shareText} ${activityUrl}`
-    )}`;
+      shareText
+    )}&url=${encodeURIComponent(activityUrl)}`;
     const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
       activityUrl
-    )}&quote=${encodeURIComponent(shareText)}`;
+    )}`;
 
     return { whatsappUrl, xUrl, facebookUrl };
   }
