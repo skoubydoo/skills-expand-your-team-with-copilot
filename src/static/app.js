@@ -454,14 +454,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Apply difficulty filter
-      if (currentDifficulty === "") {
-        // "All Levels" selected: show only activities with no difficulty set
-        if (details.difficulty) {
-          return;
-        }
-      } else {
-        // Specific difficulty selected: show only activities with that difficulty
-        if (details.difficulty !== currentDifficulty) {
+      if (currentDifficulty !== "") {
+        // Specific difficulty selected: show activities of that level + activities with no difficulty set
+        if (details.difficulty && details.difficulty !== currentDifficulty) {
           return;
         }
       }
