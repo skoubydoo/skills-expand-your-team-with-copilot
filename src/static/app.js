@@ -455,7 +455,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Apply difficulty filter
       if (currentDifficulty !== "") {
-        // Specific difficulty selected: show activities of that level + activities with no difficulty set
+        // Specific difficulty selected: skip activities that have a different difficulty.
+        // Activities with no difficulty set are shown in all filtered views (they are for all levels).
         if (details.difficulty && details.difficulty !== currentDifficulty) {
           return;
         }
