@@ -489,6 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
       `${shareText} ${activityUrl}`
     )}`;
+    // X sharing still uses the twitter.com intent endpoint.
     const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       shareText
     )}&url=${encodeURIComponent(activityUrl)}`;
@@ -560,13 +561,13 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="share-buttons" aria-label="Share this activity">
         <a class="share-button whatsapp-share" href="${
           shareLinks.whatsappUrl
-        }" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        }" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">WhatsApp</a>
         <a class="share-button x-share" href="${
           shareLinks.xUrl
-        }" target="_blank" rel="noopener noreferrer">X</a>
+        }" target="_blank" rel="noopener noreferrer" aria-label="Share on X">X</a>
         <a class="share-button facebook-share" href="${
           shareLinks.facebookUrl
-        }" target="_blank" rel="noopener noreferrer">Facebook</a>
+        }" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook">Facebook</a>
       </div>
       <div class="participants-list">
         <h5>Current Participants:</h5>
