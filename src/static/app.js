@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
+  const schoolName = "Mergington High School";
 
   // Activity categories with corresponding colors
   const activityTypes = {
@@ -473,7 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Create a stable anchor id for each activity
-  function getActivityAnchorId(activityName) {
+  function createActivityAnchorId(activityName) {
     return `activity-${activityName
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
@@ -483,8 +484,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Build social sharing links for an activity
   function buildShareLinks(activityName, formattedSchedule) {
     const pageUrl = `${window.location.origin}${window.location.pathname}`;
-    const activityUrl = `${pageUrl}#${getActivityAnchorId(activityName)}`;
-    const shareText = `Check out ${activityName} at Mergington High School! Schedule: ${formattedSchedule}`;
+    const activityUrl = `${pageUrl}#${createActivityAnchorId(activityName)}`;
+    const shareText = `Check out ${activityName} at ${schoolName}! Schedule: ${formattedSchedule}`;
 
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
       `${shareText} ${activityUrl}`
@@ -504,7 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderActivityCard(name, details) {
     const activityCard = document.createElement("div");
     activityCard.className = "activity-card";
-    activityCard.id = getActivityAnchorId(name);
+    activityCard.id = createActivityAnchorId(name);
 
     // Calculate spots and capacity
     const totalSpots = details.max_participants;
