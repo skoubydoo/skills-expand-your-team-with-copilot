@@ -559,7 +559,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="tooltip-text">Regular meetings at this time throughout the semester</span>
       </p>
       ${capacityIndicator}
-      <div class="share-buttons" aria-label="Share this activity">
+      <div class="share-buttons">
         <a class="share-button whatsapp-share" href="${
           shareLinks.whatsappUrl
         }" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp">WhatsApp</a>
