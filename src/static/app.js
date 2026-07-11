@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
   const closeLoginModal = document.querySelector(".close-login-modal");
   const loginMessage = document.getElementById("login-message");
-  const schoolName = "Mergington High School";
+  const schoolName =
+    document.querySelector("header h1")?.textContent || "Our School";
 
   // Activity categories with corresponding colors
   const activityTypes = {
@@ -483,7 +484,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Build social sharing links for an activity
   function buildShareLinks(activityName, formattedSchedule) {
-    const pageUrl = `${window.location.origin}${window.location.pathname}`;
+    const pageUrl = window.location.href.split("#")[0];
     const activityUrl = `${pageUrl}#${createActivityAnchorId(activityName)}`;
     const shareText = `Check out ${activityName} at ${schoolName}! Schedule: ${formattedSchedule}`;
 
