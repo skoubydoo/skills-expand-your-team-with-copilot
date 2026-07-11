@@ -472,10 +472,38 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Create a stable anchor id for each activity
+  function getActivityAnchorId(activityName) {
+    return `activity-${activityName
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "")}`;
+  }
+
+  // Build social sharing links for an activity
+  function buildShareLinks(activityName, formattedSchedule) {
+    const pageUrl = `${window.location.origin}${window.location.pathname}`;
+    const activityUrl = `${pageUrl}#${getActivityAnchorId(activityName)}`;
+    const shareText = `Check out ${activityName} at Mergington High School! Schedule: ${formattedSchedule}`;
+
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+      `${shareText} ${activityUrl}`
+    )}`;
+    const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      shareText
+    )}&url=${encodeURIComponent(activityUrl)}`;
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      activityUrl
+    )}&quote=${encodeURIComponent(shareText)}`;
+
+    return { whatsappUrl, xUrl, facebookUrl };
+  }
+
   // Function to render a single activity card
   function renderActivityCard(name, details) {
     const activityCard = document.createElement("div");
     activityCard.className = "activity-card";
+    activityCard.id = getActivityAnchorId(name);
 
     // Calculate spots and capacity
     const totalSpots = details.max_participants;
@@ -498,6 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Format the schedule using the new helper function
     const formattedSchedule = formatSchedule(details);
+    const shareLinks = buildShareLinks(name, formattedSchedule);
 
     // Create activity tag
     const tagHtml = `
@@ -528,6 +557,17 @@ document.addEventListener("DOMContentLoaded", () => {
         <span class="tooltip-text">Regular meetings at this time throughout the semester</span>
       </p>
       ${capacityIndicator}
+      <div class="share-buttons" aria-label="Share this activity">
+        <a class="share-button whatsapp-share" href="${
+          shareLinks.whatsappUrl
+        }" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a class="share-button x-share" href="${
+          shareLinks.xUrl
+        }" target="_blank" rel="noopener noreferrer">X</a>
+        <a class="share-button facebook-share" href="${
+          shareLinks.facebookUrl
+        }" target="_blank" rel="noopener noreferrer">Facebook</a>
+      </div>
       <div class="participants-list">
         <h5>Current Participants:</h5>
         <ul>

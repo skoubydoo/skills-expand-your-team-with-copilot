@@ -287,6 +287,39 @@ section h3 {
   border: none;
 }
 
+.share-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.share-button {
+  text-decoration: none;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 12px;
+  transition: opacity 0.2s ease;
+}
+
+.share-button:hover {
+  opacity: 0.85;
+}
+
+.whatsapp-share {
+  background-color: #25d366;
+}
+
+.x-share {
+  background-color: #111;
+}
+
+.facebook-share {
+  background-color: #1877f2;
+}
+
 button {
   background-color: var(--primary);
   color: white;
